@@ -1,0 +1,36 @@
+#
+# apache 2.4
+#
+
+# override charset
+AddDefaultCharset UTF-8
+
+# prevent directory listings
+Options -Indexes
+
+# Follow symbolic links
+# Necessary for rewrites on some hosts
+Options +FollowSymLinks
+
+# Set default page handler
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+
+	# OPTIONAL - rewrite URL to use https
+	RewriteCond %{HTTPS} !=on
+	RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+	RewriteBase /
+
+	# remove trailing '/' from the URL
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+	# If the file or directory doesn't exist...
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	# ...forward it to index.php?id=PAGE_NAME
+	RewriteRule /?([A-Za-z0-9_-]+)/?$ /index.php?id=$1 [QSA,L]
+</IfModule>

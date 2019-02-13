@@ -1,0 +1,16 @@
+html,
+body {
+    background-color: #23323f;
+}
+
+.mt-6 {
+    margin-top: 6rem;
+}
+
+.bg-footer {
+    background-color: #3e586e;
+}
+
+.navbar {
+    border-bottom: 1px solid #59646e;
+}
